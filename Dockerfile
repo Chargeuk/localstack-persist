@@ -1,4 +1,4 @@
-ARG LOCALSTACK_VERSION
+ARG LOCALSTACK_VERSION=4.0.4
 FROM localstack/localstack:${LOCALSTACK_VERSION}
 
 LABEL maintainer="Graham Esau (hello@graham.cool)"
