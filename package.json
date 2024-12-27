@@ -6,8 +6,11 @@
     "dependencies": {
     },
     "scripts": {
-      "build-docker": "docker build --build-arg LOCALSTACK_VERSION=4.0.3 --tag chargeuk/localstack-persist:4.0.4 --platform linux/amd64 . && docker image prune --force",
-      "build-docker-clean": "docker build --no-cache --tag chargeuk/comfy-docker-dev-vts --target final --platform linux/amd64 . && docker image prune --force",
+      "build-push-docker": "docker buildx build --push --build-arg LOCALSTACK_VERSION=4.0.3 --tag chargeuk/localstack-persist:4.0.4 --platform linux/amd64,linux/arm64/v8 .",
+      "build-docke": "docker build --build-arg LOCALSTACK_VERSION=4.0.3 --tag chargeuk/localstack-persist:4.0.4 . && docker image prune --force",
+      "build-docker-x86": "docker build --build-arg LOCALSTACK_VERSION=4.0.3 --tag chargeuk/localstack-persist:4.0.4 --platform linux/amd64 . && docker image prune --force",
+      "build-docker-arm": "docker build --build-arg LOCALSTACK_VERSION=4.0.3 --tag chargeuk/localstack-persist:4.0.4 --platform linux/arm64/v8 . && docker image prune --force",
+      "build-docker-clean": "docker build --no-cache --tag chargeuk/comfy-docker-dev-vts --target final . && docker image prune --force",
       "stop-docker": "docker rm --force comfy-docker-dev-vts",
       "start-docker": "yarn stop-docker && docker run -it --gpus=all --env NVIDIA_VISIBLE_DEVICES=all --env COMFY_POLLING_INTERVAL_MS=5000 --env SERVE_API_LOCALLY=true --env NVIDIA_VISIBLE_DEVICES=all --env BUCKET_ENDPOINT_URL=http://host.docker.internal:4566 --env BUCKET_ACCESS_KEY_ID=test --env BUCKET_SECRET_ACCESS_KEY=test --env BUCKET_NAME=kadshow-runpod-files -p 8000:8000 -p 8188:8188 -v H:/code/ai/runpod-worker-comfy/data/comfyui/output:/comfyui/output -v H:/code/ai/runpod-worker-comfy/data/runpod-volume:/runpod-volume --name comfy-docker-dev-vts chargeuk/comfy-docker-dev-vts"
     }
